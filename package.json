@@ -1,0 +1,38 @@
+{
+  "name": "swissknife-codeql-runner",
+  "version": "0.1.0",
+  "description": "Swissknife CodeQL Runner",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swissknife/codeql.git"
+  },
+  "keywords": [
+    "codeql",
+    "swissknife"
+  ],
+  "author": "Swissknife <hi@swissknife.dev> (https://beta.swissknife.dev)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/swissknife/codeql/issues"
+  },
+  "homepage": "https://github.com/swissknife/codeql#readme",
+  "devDependencies": {
+    "@actions/exec": "^1.0.4",
+    "@types/js-yaml": "^3.12.4",
+    "@types/node": "^14.0.13",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "@octokit/rest": "^18.0.0",
+    "console-log-level": "^1.4.1",
+    "fs": "0.0.1-security",
+    "js-yaml": "^3.14.0",
+    "path": "^0.12.7"
+  }
+}
