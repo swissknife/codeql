@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.0.0",
+    "axios": "^0.19.2",
     "console-log-level": "^1.4.1",
     "fs": "0.0.1-security",
     "js-yaml": "^3.14.0",

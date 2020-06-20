@@ -3,6 +3,7 @@ import consoleLogLevel from "console-log-level";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
+import axios from "axios";
 
 import * as sharedEnv from "./shared-environment";
 
@@ -135,4 +136,30 @@ export function saveToCircleEnv(key: string, val: string) {
   const filePath = getRequiredEnvParam("BASH_ENV");
   fs.appendFileSync(filePath, `export ${key}="${val}"\n`);
   process.env[key] = val;
+}
+
+// Sends swissknife the info about this job.
+export async function reportToSwissknife() {
+  console.log("Reporting to Swissknife");
+  let vcsType = "github";
+  // This check fails is a github repo is contains `bitbucket.org`.
+  // TODO(roopakv): Find a better way to fix this
+  if (getRequiredEnvParam("CIRCLE_REPOSITORY_URL").includes("bitbucket.org")) {
+    vcsType = "bitbucket";
+  }
+  const response = await axios.post(
+    "https://beta.swissknife.dev/api/security/save_circle_scan",
+    {
+      job_number: getRequiredEnvParam("CIRCLE_BUILD_NUM"),
+      vcsType,
+      org: getRequiredEnvParam("CIRCLE_PROJECT_USERNAME"),
+      repo: getRequiredEnvParam("CIRCLE_PROJECT_REPONAME"),
+    },
+    {
+      headers: {
+        "Swissknife-Api-Key": getRequiredEnvParam("SWISSKNIFE_API_KEY"),
+      },
+    }
+  );
+  console.log("Response from swissknife: ", response.data);
 }

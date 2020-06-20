@@ -264,7 +264,6 @@ export async function run() {
     util.saveToCircleEnv(sharedEnv.CODEQL_ACTION_CMD, codeqlSetup.cmd);
   } catch (error) {
     console.log(error.message);
-    console.log(error);
     throw error;
   }
   console.info("Initializing CodeQL succeeded");

@@ -253,11 +253,14 @@ export async function run() {
     console.info("Analyzing database");
     await runQueries(codeqlCmd, databaseFolder, outputFolder, config);
 
-    // TODO(roopakv): Upload to swissknife
+    const reportToSwissknife = process.env.SK_REPORT_TO_SWISSKNIFE;
+    if (reportToSwissknife && reportToSwissknife === "true") {
+      await util.reportToSwissknife();
+    }
   } catch (error) {
     console.error(error.message);
     console.log(error);
-    return;
+    throw error;
   }
 
   console.log("analzying DB was successful");

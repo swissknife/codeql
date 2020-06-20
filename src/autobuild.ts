@@ -55,8 +55,7 @@ export async function run() {
       "We were unable to automatically build your code. Please replace the call to the autobuild action with your custom build steps.  " +
         error.message
     );
-    console.log(error);
-    return;
+    throw error;
   }
 
   console.info("Autobuild finished successfully");
