@@ -9,7 +9,7 @@ We will try our best to keep up to the changes they are making.
 
 This wrapper is best used with the [swissknife orb](https://circleci.com/orbs/registry/orb/roopakv/swissknife). More documentation is being added [here](https://docs.swissknife.dev).
 
-The specific CircleCI job that runs CodeQL against your codebase is [here](https://circleci.com/orbs/registry/orb/roopakv/swissknife#jobs-codeql-analysis)
+The specific CircleCI job that runs CodeQL against your codebase is the `codeql-analysis` job which is documented [here](https://circleci.com/orbs/registry/orb/roopakv/swissknife#jobs-codeql-analysis).
 
 ## Contributing
 
