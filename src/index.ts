@@ -1,6 +1,7 @@
 import * as setup from "./setup";
 import * as autobuild from "./autobuild";
 import * as finalize from "./finalize-db";
+import * as report from "./swissknife-report";
 
 var args = process.argv.slice(2);
 
@@ -16,8 +17,11 @@ switch (args[0]) {
   case "finalize":
     methodToRun = finalize.run;
     break;
+  case "swissknife_report":
+    methodToRun = report.run;
+    break;
   default:
-    console.error("Invalid method, use one of setup, build or finalize");
+    console.error("Invalid method, use one of setup, build, finalize or swissknife_report");
     process.exit(1);
 }
 

@@ -7,6 +7,7 @@ import * as configUtils from "./config-utils";
 import * as externalQueries from "./external-queries";
 import * as sharedEnv from "./shared-environment";
 import * as util from "./util";
+import _ from "lodash";
 
 /**
  * A list of queries from https://github.com/github/codeql that
