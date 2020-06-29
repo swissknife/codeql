@@ -9,10 +9,11 @@ function getFileUriAtCommit(uri: string, lineLoc?: string) {
   const owner = util.getRequiredEnvParam("CIRCLE_PROJECT_USERNAME");
   const repo = util.getRequiredEnvParam("CIRCLE_PROJECT_REPONAME");
   const currentSha = util.getRequiredEnvParam("CIRCLE_SHA1");
-  if (!lineLoc) {
-    lineLoc = "";
+  let lineLocHash = "";
+  if (lineLoc && lineLoc !== "") {
+    lineLocHash = `#L${lineLoc}`;
   }
-  return `https://github.com/${owner}/${repo}/blob/${currentSha}/${uri}${lineLoc}`;
+  return `https://github.com/${owner}/${repo}/blob/${currentSha}/${uri}${lineLocHash}`;
 }
 
 async function fixUpReports(reportFolder: string) {
@@ -30,17 +31,11 @@ async function fixUpReports(reportFolder: string) {
         continue;
       }
       for (let result of run.results) {
-        console.log(result);
         if (result.relatedLocations && result.relatedLocations.length > 0) {
           for (let rloc of result.relatedLocations) {
             const uri = _.get(rloc, "physicalLocation.artifactLocation.uri");
-            const startLine = _.get(rloc, "physicalLocation.region.startLine", "");
             if (uri) {
-              _.set(
-                rloc,
-                "physicalLocation.artifactLocation.uri",
-                getFileUriAtCommit(uri, startLine)
-              );
+              _.set(rloc, "physicalLocation.artifactLocation.uri", getFileUriAtCommit(uri));
             }
           }
         }
@@ -48,8 +43,7 @@ async function fixUpReports(reportFolder: string) {
         const ploc = _.get(result, "locations.0.physicalLocation");
         const artLoc = ploc && ploc.artifactLocation;
         const artUri = artLoc && artLoc.uri;
-        let startLine = _.get(ploc, "region.startLine");
-        startLine = startLine ? `#${startLine}` : "";
+        let startLine = `${_.get(ploc, "region.startLine")}`;
         if (artUri) {
           _.set(artLoc, "properties.href", getFileUriAtCommit(artUri, startLine));
         }
